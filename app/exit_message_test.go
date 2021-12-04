@@ -1,11 +1,12 @@
 package app
 
 import (
-	"strings"
-	"testing"
-
+	"fmt"
+	"github.com/logrusorgru/aurora"
 	"github.com/wtfutil/wtf/support"
 	"gotest.tools/assert"
+	"strings"
+	"testing"
 )
 
 func Test_displayExitMessage(t *testing.T) {
@@ -68,4 +69,25 @@ func Test_displayExitMessage(t *testing.T) {
 			}
 		})
 	}
+}
+
+func Test_contributorThankYouMessage(t *testing.T) {
+	wtfApp := WtfApp{}
+	actual := wtfApp.contributorThankYouMessage()
+
+	t.Run("contains main message thank message", func(t *testing.T) {
+		expected := "On behalf of all the users of WTF, thank you for contributing to the source code."
+
+		if strings.Contains(actual, expected) == false {
+			t.Errorf("Expected '%s' to be present in '%s'", expected, actual)
+		}
+	})
+
+	t.Run("contains a green colored message", func(t *testing.T) {
+		expected := fmt.Sprintf(" %s", aurora.Green("\n\n    You rock."))
+
+		if strings.Contains(actual, expected) == false {
+			t.Errorf("Expected '%s' to be present in '%s'", expected, actual)
+		}
+	})
 }
