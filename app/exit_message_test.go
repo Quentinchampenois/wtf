@@ -112,3 +112,24 @@ func Test_sponsorThankYouMessage(t *testing.T) {
 		}
 	})
 }
+
+func Test_supportRequestMessage(t *testing.T) {
+	wtfApp := WtfApp{}
+	actual := wtfApp.supportRequestMessage()
+
+	t.Run("contains main message thank message", func(t *testing.T) {
+		expected := "The development and maintenance of WTF is supported by sponsorships."
+
+		if strings.Contains(actual, expected) == false {
+			t.Errorf("Expected '%s' to be present in '%s'", expected, actual)
+		}
+	})
+
+	t.Run("contains a green colored message", func(t *testing.T) {
+		expected := fmt.Sprintf("    Sponsor the development of WTF at %s\n", aurora.Green("https://github.com/sponsors/senorprogrammer"))
+
+		if strings.Contains(actual, expected) == false {
+			t.Errorf("Expected '%s' to be present in '%s'", expected, actual)
+		}
+	})
+}
