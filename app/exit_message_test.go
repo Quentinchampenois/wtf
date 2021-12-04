@@ -91,3 +91,24 @@ func Test_contributorThankYouMessage(t *testing.T) {
 		}
 	})
 }
+
+func Test_sponsorThankYouMessage(t *testing.T) {
+	wtfApp := WtfApp{}
+	actual := wtfApp.sponsorThankYouMessage()
+
+	t.Run("contains main message thank message", func(t *testing.T) {
+		expected := "Your sponsorship of WTF makes a difference. Thank you for sponsoring and supporting WTF."
+
+		if strings.Contains(actual, expected) == false {
+			t.Errorf("Expected '%s' to be present in '%s'", expected, actual)
+		}
+	})
+
+	t.Run("contains a green colored message", func(t *testing.T) {
+		expected := fmt.Sprintf(" %s", aurora.Green("\n\n    You're awesome."))
+
+		if strings.Contains(actual, expected) == false {
+			t.Errorf("Expected '%s' to be present in '%s'", expected, actual)
+		}
+	})
+}
