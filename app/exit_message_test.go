@@ -1,11 +1,12 @@
 package app
 
 import (
-	"strings"
-	"testing"
-
+	"fmt"
+	"github.com/logrusorgru/aurora"
 	"github.com/wtfutil/wtf/support"
 	"gotest.tools/assert"
+	"strings"
+	"testing"
 )
 
 func Test_displayExitMessage(t *testing.T) {
@@ -68,4 +69,67 @@ func Test_displayExitMessage(t *testing.T) {
 			}
 		})
 	}
+}
+
+func Test_contributorThankYouMessage(t *testing.T) {
+	wtfApp := WtfApp{}
+	actual := wtfApp.contributorThankYouMessage()
+
+	t.Run("contains main message thank message", func(t *testing.T) {
+		expected := "On behalf of all the users of WTF, thank you for contributing to the source code."
+
+		if strings.Contains(actual, expected) == false {
+			t.Errorf("Expected '%s' to be present in '%s'", expected, actual)
+		}
+	})
+
+	t.Run("contains a green colored message", func(t *testing.T) {
+		expected := fmt.Sprintf(" %s", aurora.Green("\n\n    You rock."))
+
+		if strings.Contains(actual, expected) == false {
+			t.Errorf("Expected '%s' to be present in '%s'", expected, actual)
+		}
+	})
+}
+
+func Test_sponsorThankYouMessage(t *testing.T) {
+	wtfApp := WtfApp{}
+	actual := wtfApp.sponsorThankYouMessage()
+
+	t.Run("contains main message thank message", func(t *testing.T) {
+		expected := "Your sponsorship of WTF makes a difference. Thank you for sponsoring and supporting WTF."
+
+		if strings.Contains(actual, expected) == false {
+			t.Errorf("Expected '%s' to be present in '%s'", expected, actual)
+		}
+	})
+
+	t.Run("contains a green colored message", func(t *testing.T) {
+		expected := fmt.Sprintf(" %s", aurora.Green("\n\n    You're awesome."))
+
+		if strings.Contains(actual, expected) == false {
+			t.Errorf("Expected '%s' to be present in '%s'", expected, actual)
+		}
+	})
+}
+
+func Test_supportRequestMessage(t *testing.T) {
+	wtfApp := WtfApp{}
+	actual := wtfApp.supportRequestMessage()
+
+	t.Run("contains main message thank message", func(t *testing.T) {
+		expected := "The development and maintenance of WTF is supported by sponsorships."
+
+		if strings.Contains(actual, expected) == false {
+			t.Errorf("Expected '%s' to be present in '%s'", expected, actual)
+		}
+	})
+
+	t.Run("contains a green colored message", func(t *testing.T) {
+		expected := fmt.Sprintf("    Sponsor the development of WTF at %s\n", aurora.Green("https://github.com/sponsors/senorprogrammer"))
+
+		if strings.Contains(actual, expected) == false {
+			t.Errorf("Expected '%s' to be present in '%s'", expected, actual)
+		}
+	})
 }
